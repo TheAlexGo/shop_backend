@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('../helpers/JWT');
 
 module.exports = function (role) {
   return function (req, res, next) {
@@ -10,7 +10,7 @@ module.exports = function (role) {
       if(!token) {
         return res.status(401).json({message: 'Не авторизован'});
       }
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const decoded = jwt.verify(token);
       if(decoded.role !== role) {
         return res.status(403).json({message: "Нет доступа"});
       }

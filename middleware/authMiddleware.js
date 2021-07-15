@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('../helpers/JWT');
 
 // middleware проверки авторизации
 module.exports = function (req, res, next) {
@@ -10,8 +10,7 @@ module.exports = function (req, res, next) {
     if(!token) {
       return res.status(401).json({message: 'Не авторизован'});
     }
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    req.user = decoded;
+    req.user = jwt.verify(token);
     next();
   } catch (e) {
     return res.status(401).json({message: 'Не авторизован'});

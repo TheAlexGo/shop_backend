@@ -19,8 +19,13 @@ class JWT {
     );
   }
 
+  /**
+   * Проверка токена по секретному ключу, получение объекта с данными токена
+   * @param token
+   * @return {jwt}
+   */
   static verify(token) {
-
+    return jwt.verify(token, process.env.SECRET_KEY);
   }
 }
 module.exports = JWT;
