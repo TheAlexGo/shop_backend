@@ -1,5 +1,10 @@
 const jwt = require('../helpers/JWT');
 
+/**
+ * Проверка роли пользователя
+ * @param role
+ * @return {(function(*, *, *): (*|undefined))|*}
+ */
 module.exports = function (role) {
   return function (req, res, next) {
     if(req.method === 'OPTIONS') {

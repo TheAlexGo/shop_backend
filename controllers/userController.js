@@ -2,22 +2,22 @@ const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const JWT = require(path.resolve(__dirname, '..','helpers', 'JWT'));
-const {User, Basket} = require('../models/models');
+const {User,
+  // Basket
+} = require('../models/models');
 
 class UserController {
   async registration(req, res, next) {
     const { email, password, role } = req.body;
-    if(!email || !password) {
-      return next(ApiError.badRequest('Некорректный email или password'));
-    }
+
     const candidate = await User.findOne({where: {email}});
     if(candidate) {
       return next(ApiError.badRequest('Пользователь с таким email уже существует'));
     }
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({email, role, password: hashPassword});
-    const basket = await Basket.create({userId: user.id});
-    const token = JWT.generate(user.id, user.email, user.role);
+    // const basket = await Basket.create({userId: user.id});
+    const token = JWT.generate(user.id, user.role);
     return res.json({token});
   }
 
@@ -31,12 +31,22 @@ class UserController {
     if(!comparePassword) {
       return next(ApiError.internal('Указан неверный пароль'));
     }
-    const token = JWT.generate(user.id, user.email, user.role);
+    const token = JWT.generate(user.id, user.role);
     return res.json({token});
   }
 
+  async delete(req, res, next) {
+    const {email} = req.body;
+    const user = await User.findOne({where: {email}});
+    if(!user) {
+      return next(ApiError.internal('Пользователь не найден'));
+    }
+    await User.destroy({where: {email}});
+    return res.json({message: `Пользователь с email: ${email} успешно удалён!`});
+  }
+
   async check(req, res) {
-    const token = JWT.generate(req.user.id, req.user.email, req.user.role);
+    const token = JWT.generate(req.user.id, req.user.role);
     return res.json({token});
   }
 }

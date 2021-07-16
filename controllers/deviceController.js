@@ -6,14 +6,12 @@ const uuid = require('uuid'),
 class DeviceController {
   async create(req, res, next) {
     try {
-      let {name, price, brandId, typeId, info} = req.body;
-      const {img} = req.files;
+      const {name, price, brandId, typeId, info, img} = req.data;
       let fileName = uuid.v4() + ".jpg";
-      img.mv(path.resolve(__dirname, '..', 'static', fileName));
+      img.mv(path.resolve(__dirname, '..', 'static', fileName)).then();
       const device = await Device.create({name, price, brandId, typeId, img: fileName});
 
       if(info) {
-        info = JSON.parse(info);
         info.forEach(i => DeviceInfo.create({
           title: i.title,
           description: i.description,

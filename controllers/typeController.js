@@ -1,11 +1,9 @@
-const {Type} = require('../models/models'),
-  ApiError = require('../error/ApiError');
+const {Type} = require('../models/models');
+
 class TypeController {
-  async create(req, res, next) {
-    const {name} = req.body;
-    if(!name) {
-      return next(ApiError.badRequest("Не указано название!"));
-    }
+  async create(req, res) {
+    const {name} = req.data;
+
     const type = await Type.create({name});
     return res.json(type);
   }

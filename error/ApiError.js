@@ -12,7 +12,7 @@ class ApiError extends Error {
    * @return {ApiError}
    */
   static badRequest(message) {
-    return new ApiError(404, message);
+    return new ApiError(400, message);
   }
 
   /**

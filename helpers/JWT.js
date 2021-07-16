@@ -3,15 +3,13 @@ class JWT {
   /**
    * Генерирует JWT-токен
    * @param {number} id - id пользователя
-   * @param {string} email - email пользоавтеля
    * @param {string} role - role пользователя
    * @return {jwt} - возвращает токен
    */
-  static generate(id, email, role) {
+  static generate(id, role) {
     return jwt.sign(
       {
         id,
-        email,
         role
       },
       process.env.SECRET_KEY,

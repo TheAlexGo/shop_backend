@@ -1,12 +1,9 @@
-const {Brand} = require('../models/models'),
-  ApiError = require('../error/ApiError');
+const {Brand} = require('../models/models');
 
 class BrandController {
-  async create(req, res, next) {
-    const {name} = req.body;
-    if(!name) {
-      return next(ApiError.badRequest("Не указано название!"));
-    }
+  async create(req, res) {
+    const {name} = req.data;
+
     const brand = await Brand.create({name});
     return res.json(brand);
   }
