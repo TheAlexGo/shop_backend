@@ -1,6 +1,12 @@
 const jwt = require('../helpers/JWT');
 
-// middleware проверки авторизации
+/**
+ * Проверка авторизации пользователя и получение его данных из токена
+ * @param req - запрос
+ * @param res - ответ
+ * @param next
+ * @return {*}
+ */
 module.exports = function (req, res, next) {
   if(req.method === 'OPTIONS') {
     next();

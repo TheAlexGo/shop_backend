@@ -7,7 +7,7 @@ const checkRole = require('../middleware/checkRoleMiddleware');
 
 
 router.post('/registration', checkFields('REGISTER'), userController.registration);
-router.post('/login', userController.login);
+router.post('/login', checkFields('LOGIN'), userController.login);
 router.get('/auth', authMiddleware, userController.check);
 router.delete('/delete', checkRole('ADMIN'), checkFields('DELETE'), userController.delete);
 

@@ -18,7 +18,7 @@ const Basket = sequelize.define('basket', {
 
 // Модель устройства в корзине
 const BasketDevice = sequelize.define('basket_device', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
 // Модель устройства
@@ -69,7 +69,7 @@ User.hasMany(Rating);
 Rating.belongsTo(User);
 
 // Связь между корзиной и девайсами в ней: 1 ко многим
-Basket.hasMany(BasketDevice);
+Basket.hasMany(BasketDevice, {as: 'items'});
 BasketDevice.belongsTo(Basket);
 
 // Связь между типом и девайсом: 1 ко многим

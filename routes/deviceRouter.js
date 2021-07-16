@@ -5,7 +5,7 @@ const checkRole = require('../middleware/checkRoleMiddleware');
 const checkFieldsMiddleware = require('../middleware/checkField/checkFieldsDeviceMiddleware');
 
 router.post('/', checkRole('ADMIN'), checkFieldsMiddleware, deviceController.create);
-router.get('/', deviceController.getAll);
-router.get('/:id', deviceController.getOne);
+router.get('/', checkRole('ADMIN'), deviceController.getAll);
+router.get('/:id', checkRole('ADMIN'), deviceController.getOne);
 
 module.exports = router;

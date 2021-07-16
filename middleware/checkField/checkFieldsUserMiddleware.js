@@ -2,7 +2,7 @@ module.exports = function (proc) {
   return function(req, res, next) {
     const { email, password } = req.body;
     switch (proc) {
-      case 'REGISTER':
+      case 'REGISTER': case 'LOGIN':
         if(!email || !password) {
           return res.status(400).json({message: "Некорректный email или password!"});
         }
